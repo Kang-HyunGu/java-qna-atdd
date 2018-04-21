@@ -27,11 +27,11 @@ public class LoginAcceptanceTest extends AcceptanceTest {
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("userId", userId);
         params.add("password", "test");
-        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(params, headers);
+        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(params, headers);
 
         ResponseEntity<String> response = template().postForEntity("/users/login", request, String.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.FOUND));
-        assertThat(response.getHeaders().getLocation().getPath(), is("/user/login"));
+        assertThat(response.getHeaders().getLocation().getPath(), is("/users"));
     }
 }
