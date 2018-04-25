@@ -35,25 +35,18 @@ public class QnaService {
         return questionRepository.findOne(id);
     }
 
+    @Transactional
     public Question update(User loginUser, long id, Question updatedQuestion) throws UnAuthenticationException {
         Question found = questionRepository.findOne(id);
-        if( ! found.isOwner(loginUser)) {
-            throw new UnAuthenticationException();
-        }
+        found.update(loginUser, updatedQuestion);
 
-        found.update(updatedQuestion);
-
-        return questionRepository.save(found);
+        return found;
     }
 
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question found = questionRepository.findOne(questionId);
-        if( ! found.isOwner(loginUser)) {
-            throw new CannotDeleteException("내가 작성한 글만 삭제 가능합니다.");
-        }
-
-        found.delete();
+        found.delete(loginUser);
     }
 
     public Iterable<Question> findAll() {

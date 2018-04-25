@@ -67,9 +67,11 @@ public class QuestionAcceptanceTest extends AcceptanceTest {
 
     @Test
     public void 질문_수정() throws Exception {
-        HtmlFormDataBuilder builder = HtmlFormDataBuilder.urlEncodedForm();
-        builder.addParameter("_method", "put")
-                .addParameter("title", "modify test")
+        HtmlFormDataBuilder builder = HtmlFormDataBuilder
+                .urlEncodedForm()
+                .put();
+
+        builder.addParameter("title", "modify test")
                 .addParameter("content", "modify content");
 
         ResponseEntity<String> response = basicAuthTemplate()
@@ -80,8 +82,9 @@ public class QuestionAcceptanceTest extends AcceptanceTest {
 
     @Test
     public void 질문_삭제() throws Exception {
-        HtmlFormDataBuilder builder = HtmlFormDataBuilder.urlEncodedForm();
-        builder.addParameter("_method", "delete");
+        HtmlFormDataBuilder builder = HtmlFormDataBuilder
+                .urlEncodedForm()
+                .delete();
 
         ResponseEntity<String> response = basicAuthTemplate()
                 .postForEntity(String.format("/questions/%d", 1L), builder.build(), String.class);
